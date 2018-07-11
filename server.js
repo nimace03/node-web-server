@@ -4,6 +4,7 @@ const hbs = require('hbs');
 const fs = require('fs');
 var app = express();
 
+const port = process.env.PORT || 3000; 
 //Object from modules
 
 // partials
@@ -28,9 +29,9 @@ app.use((req,res,next)=>{
 });
 
 // Maintanance Middleware
-app.use((req,res,next)=>{
-  res.render('maintanance.hbs');
-});
+// app.use((req,res,next)=>{
+//   res.render('maintanance.hbs');
+// });
 
 //static page if it kept above Maintanance Middleware then this page will run even in maintanance mode 
 app.use(express.static(__dirname + '/public'));
@@ -43,11 +44,6 @@ hbs.registerHelper('getCurYear',()=>{
 // helper for function test
 hbs.registerHelper('getHeader',(someText)=>{
   return someText.toUpperCase();
-});
-
-// Webserver to listen 3000
-app.listen(3000,()=>{
-  console.log("Server is running in 3000 port");
 });
 
 // route
@@ -71,4 +67,9 @@ app.get('/about',(req,res)=>{
 
 app.get('/bad',(req,res)=>{
   res.send({error : "Unable to Access"});
+});
+
+// Webserver to listen 3000
+app.listen(port,()=>{
+  console.log(`Server is running in 3000 port ${port}`);
 });
